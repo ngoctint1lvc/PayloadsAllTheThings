@@ -27,9 +27,10 @@
 * [References](#references)
     
 
-## Tools
+## Tools & wiki
 
 * [commix - Automated All-in-One OS command injection and exploitation tool](https://github.com/commixproject/commix)
+* https://wiki.bash-hackers.org
 
 ## Exploits
 
