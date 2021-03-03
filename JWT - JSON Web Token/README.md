@@ -8,6 +8,7 @@
 - [JWT Format](#jwt-format)
 - [JWT Signature - None algorithm](#jwt-signature---none-algorithm)
 - [JWT Signature - RS256 to HS256](#jwt-signature---rs256-to-hs256)
+- [Recover JWT public key using two JWT tokens](#recover-jwt-public-key-using-two-JWT-tokens)
 - [Breaking JWT's secret](#breaking-jwts-secret)
     - [JWT Tool](#jwt-tool)
     - [JWT cracker](#jwt-cracker)
@@ -166,6 +167,15 @@ Here are the steps to edit an RS256 JWT token into an HS256
     [HEADER EDITED RS256 TO HS256].[DATA EDITED].[SIGNATURE]
     eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIzIiwidXNlcm5hbWUiOiJ2aXNpdG9yIiwicm9sZSI6IjEifQ.j0IbNR62H_Im34jVJqfpubt7gjlojB-GLyYaDFiJEOA
     ```
+
+## Recover JWT public key using two JWT tokens
+If the jwt token is signed with RSA algorithm using some common `e` values such as `{3, 17, 65537}`, we can use the following attack to revover `n` as shown [here](https://crypto.stackexchange.com/questions/30289/is-it-possible-to-recover-an-rsa-modulus-from-its-signatures). Chain with RS256 to HS256 attack, we can sign any JWT token we want.
+
+- Link to POC: https://github.com/silentsignal/rsa_sign2n/tree/release/CVE-2017-11424
+
+Ref:
+- https://github.com/qxxxb/ctf/tree/master/2021/union_ctf/Cr0wnAir
+- https://ctftime.org/task/14728
 
 ## Breaking JWT's secret
 
